@@ -66,7 +66,7 @@
                     }(targetRow, col);
                 }(targetRow, col)
                         // Set game as finished, show that we are winner and as if newgame is desired, when answer=yes then restart game
-                        ? finished = 1 && win[showMessage](doc[gid](wonLabel)[content].replace("%s", players[current].toLowerCase())) && start()
+                        ? finished = 1 && win[showMessage](doc[gid](wonLabel)[content].replace("%s", players[current].toLowerCase())) && start() // Sadly the 'confirm' will show before css-rendering was done (just like described here: https://stackoverflow.com/questions/19188191/is-it-possible-to-make-sure-addclass-is-rendered-before-showing-confirm-box)
                         // Update the 'Who's turn'-indicator
                         : colorLabel[content] = colorLabel[classname] = players[current = (current + 1) % 2] 
                         // We haven't reached the targetRow yet, so drop to next (lower) row (after waiting 20ms)
