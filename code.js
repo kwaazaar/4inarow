@@ -20,50 +20,58 @@
                 // Initialize the 'Who's turn' indicator
                 colorLabel[content] = colorLabel[classname] = players[current = (current + 1) % 2];
                 // Clear the grid
-                for (row = 1; row < 7; row++)
-                    for (col = 1; col < 8; col++)
+                for (var row = 1; row < 7; row++)
+                    for (var col = 1; col < 8; col++)
                         cellAt(row, col)[classname] = '';
             },
             
-            // Move the stone through the grid column from top (startrow) till the last empty space (endrow)
-            // i=startrow
-            // j=col
-            // s=endrow (the one we really want)
-            makeMove = function (i, j, s) {
-                s > 0 && (cellAt(s, j)[classname] = '');
-                cellAt(s + 1, j)[classname] = players[current];
-                s === i - 1 ? function (i, j) {
-                    return function (i, j) {
-                        for (a = j - 1; 0 < a && isCurrentColor(i, a); a--) {
+            // Move the stone through the grid column from top (s=0) till the last empty space (s=targetRow+1)
+            makeMove = function (targetRow, col, s) {
+                // Clear cell above current row (= s+1) (we're moving down, so leaving that row, thus need to remove our footprint)
+                s > 0 && (cellAt(s, col)[classname] = '');
+                // Occupy cell at row s+1
+                cellAt(s + 1, col)[classname] = players[current];
+
+                // If we reached our targetrow, now check if we got a 4-in-a-row (= game finished, we are winner) 
+                s === targetRow - 1 ? function (targetRow, col) {
+                    // Find vertical 4-in-a-row
+                    return function (targetRow, col) {
+                        for (a = col - 1; 0 < a && isCurrentColor(targetRow, a); a--) { // Most left col
                         }
-                        for (b = j + 1; 8 > b && isCurrentColor(i, b); b++) {
+                        for (b = col + 1; 8 > b && isCurrentColor(targetRow, b); b++) { // Most right col
                         }
                         return 4 < b - a;
-                    }(i, j) || function (i, j) {
-                        for (c = i + 1; 7 > c && isCurrentColor(c, j); c++) {
+                    }(targetRow, col)
+                    // Find horizontal 4-in-a-row from the targetRow down (nothing can be above it :-))
+                    || function (targetRow, col) {
+                        for (c = targetRow + 1; 7 > c && isCurrentColor(c, col); c++) {
                         }
-                        return 3 < c - i;
-                    }(i, j) || function (i, j) {
-                        for (a = i - 1, b = j - 1; 0 < a && !(1 > b) && isCurrentColor(a, b); a--)
+                        return 3 < c - targetRow;
+                    }(targetRow, col)
+                    // Find diagonal 4-in-a-row from bottom left to top right
+                    || function (targetRow, col) {
+                        for (a = targetRow - 1, b = col - 1; 0 < a && !(1 > b) && isCurrentColor(a, b); a--)
                             b--;
-                        for (c = i + 1, b = j + 1; 7 > c && !(7 < b) && isCurrentColor(c, b); c++)
+                        for (c = targetRow + 1, b = col + 1; 7 > c && !(7 < b) && isCurrentColor(c, b); c++)
                             b++;
                         return 4 < c - a
-                    }(i, j) || function (i, j) {
-                        for (a = i - 1, b = j + 1; 0 < a && !(7 < b) && isCurrentColor(a, b); a--)
+                    }(targetRow, col)
+                    // Find diagonal 4-in-a-row from top left to bottom right
+                    || function (targetRow, col) {
+                        for (a = targetRow - 1, b = col + 1; 0 < a && !(7 < b) && isCurrentColor(a, b); a--)
                             b++;
-                        for (c = i + 1, b = j - 1; 7 > c && !(1 > b) && isCurrentColor(c, b); c++)
+                        for (c = targetRow + 1, b = col - 1; 7 > c && !(1 > b) && isCurrentColor(c, b); c++)
                             b--;
                         return 4 < c - a;
-                    }(i, j);
-                }(i, j)
-                        // Show winner and when newgame is desired, restart game
+                    }(targetRow, col);
+                }(targetRow, col)
+                        // Set game as finished, show that we are winner and as if newgame is desired, when answer=yes then restart game
                         ? finished = 1 && win[showMessage](doc[gid](wonLabel)[content].replace("%s", players[current].toLowerCase())) && start()
                         // Update the 'Who's turn'-indicator
                         : colorLabel[content] = colorLabel[classname] = players[current = (current + 1) % 2] 
-                        // Drop to next (lower) row
+                        // We haven't reached the targetRow yet, so drop to next (lower) row (after waiting 20ms)
                         : setTimeout(function () {
-                            makeMove(i, j, s + 1)
+                            makeMove(targetRow, col, s + 1)
                         }, 20);
 
             };
