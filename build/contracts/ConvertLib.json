@@ -261,15 +261,20 @@
     "4447": {
       "events": {},
       "links": {},
-      "address": "0x377bbcae5327695b32a1784e0e13bedc8e078c9c"
+      "address": "0x4e046f18419b39044c120d3c1ef6f1bd46c2205b"
     },
     "1506063234763": {
       "events": {},
       "links": {},
       "address": "0xa1c848f94443a6cd309a2d5d3e9fe311ff7493cb",
       "updated_at": 1506063244543
+    },
+    "1506101937348": {
+      "events": {},
+      "links": {},
+      "address": "0x6e697d45ca9c9d4036353e67d6ead73a3969e329"
     }
   },
   "schemaVersion": "1.0.0",
-  "updatedAt": "2017-09-22T14:47:26.678Z"
+  "updatedAt": "2017-09-22T17:39:08.973Z"
 }

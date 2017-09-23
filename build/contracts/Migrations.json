@@ -804,15 +804,20 @@
     "4447": {
       "events": {},
       "links": {},
-      "address": "0x3ed10fd31b3fbb2c262e6ab074dd3c684b8aa06b"
+      "address": "0x78c95d9361b6e6ec8fbae55cb40bdad7a66bc1ff"
     },
     "1506063234763": {
       "events": {},
       "links": {},
       "address": "0x3e80e646f80cadef2b33eac125f6dc9220e064d8",
       "updated_at": 1506072031579
+    },
+    "1506101937348": {
+      "events": {},
+      "links": {},
+      "address": "0x504ae86efb790ab021f00d3b23996e546bd06c7e"
     }
   },
   "schemaVersion": "1.0.0",
-  "updatedAt": "2017-09-22T14:47:26.683Z"
+  "updatedAt": "2017-09-22T17:39:08.974Z"
 }
