@@ -12,46 +12,42 @@ contract('FourInARow', function(accounts) {
   });
 
   it("should should have one player after create WITH funds", function() {
-    return FourInARow.new({value: 2000000, gas: 900000, from: accounts[0]}).then(function(i) {
+    return FourInARow.new({value: 2000000, gas: 900000, from: accounts[1]}).then(function(i) {
         return i.whoPlays.call();
     }).then(function(players) {
       assert.equal(players.length, 2, "too many players");
-      assert.equal(players[0], accounts[0], "P1 not set");
+      assert.equal(players[0], accounts[1], "P1 not set");
       assert.equal(players[1], 0, "P2 already set");
     });
   });
     
   it("should have correct maxDeposit on fallback", function() {
-    return FourInARow.deployed().then(function(i) {
+    return FourInARow.new().then(function(i) {
       var m = i;
       // Test fallback
-      return i.sendTransaction({value: 10000000, gas: 900000, from: accounts[0]})
+      return i.sendTransaction({value: 10000000, gas: 900000, from: accounts[1]})
       .then(function() {
         return i.maxDeposited.call();
       }).then(function(m) {
         //console.log(m);
-        assert.equal(m[0], accounts[0], "wrong 1st depositor");
+        assert.equal(m[0], accounts[1], "wrong 1st depositor");
         assert.equal(m[1].c[0], 10000000, "wrong 1st amount");
       });
     });
   });
     
   it("should have correct maxDeposit after second higher deposit", function() {
-    return FourInARow.deployed().then(function(i) {
-      var f = i;
-      console.log('a[0]:', accounts[0]);
-      console.log('a[1]:', accounts[1]);
-      return f.sendTransaction({value:   10000000, gas: 900000, from: accounts[0]}).then(function() {
-        return f.sendTransaction({value: 20000000, gas: 900000, from: accounts[1]});
-        }).then(function() {
-            return f.maxDeposited.call();
-        }).then (function (m) {
-          console.log(m);
-          //f.whoPlays.call().then(function (r) { console.log(r);});
-          assert.equal(m[0], accounts[1], "wrong 2nd depositor");
-          assert.equal(m[1].c[0], 20000000, "wrong 2nd amount");
-        });
+    return FourInARow.new({value: 1000000, gas: 900000, from: accounts[0]})
+    .then(function(i) {
+      return i.sendTransaction({value: 20000000, gas: 900000, from: accounts[1]})
+      .then(function() {
+          return i.maxDeposited.call();
+      }).then (function (m) {
+        //f.whoPlays.call().then(function (r) { console.log(r);});
+        assert.equal(m[0], accounts[1], "wrong 2nd depositor");
+        assert.equal(m[1].c[0], 20000000, "wrong 2nd amount");
       });
+    });
   });
   
   /*
