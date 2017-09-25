@@ -13,6 +13,7 @@ contract FourInARow {
     bool _started;
     uint8 _lastMoveBy;
     event MoveMade(address, uint8 row, uint8 col);
+    event GameStarted(address p1, address p2, uint amount);
 
     /* Constructor */
     function FourInARow() public payable {
@@ -84,6 +85,7 @@ contract FourInARow {
         }
 
         _started = true;
+        GameStarted(_p1, _p2, amountPlay);
     }
 
     function getPlayerNum(address player) private constant returns (uint8 num) {
