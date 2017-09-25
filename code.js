@@ -1,3 +1,5 @@
+'use strict';
+
 (function (doc, win, onclick, gid, classname, content, showMessage) {
     var
             row, col, c, colorLabel, cid, players, current, finished, newgameLabel, wonLabel, laststart = 1,
@@ -36,31 +38,31 @@
                 s === targetRow - 1 ? function (targetRow, col) {
                     // Find vertical 4-in-a-row
                     return function (targetRow, col) {
-                        for (a = col - 1; 0 < a && isCurrentColor(targetRow, a); a--) { // Most left col
+                        for (var a = col - 1; 0 < a && isCurrentColor(targetRow, a); a--) { // Most left col
                         }
-                        for (b = col + 1; 8 > b && isCurrentColor(targetRow, b); b++) { // Most right col
+                        for (var b = col + 1; 8 > b && isCurrentColor(targetRow, b); b++) { // Most right col
                         }
                         return 4 < b - a;
                     }(targetRow, col)
                     // Find horizontal 4-in-a-row from the targetRow down (nothing can be above it :-))
                     || function (targetRow, col) {
-                        for (c = targetRow + 1; 7 > c && isCurrentColor(c, col); c++) {
+                        for (var c = targetRow + 1; 7 > c && isCurrentColor(c, col); c++) {
                         }
                         return 3 < c - targetRow;
                     }(targetRow, col)
                     // Find diagonal 4-in-a-row from bottom left to top right
                     || function (targetRow, col) {
-                        for (a = targetRow - 1, b = col - 1; 0 < a && !(1 > b) && isCurrentColor(a, b); a--)
+                        for (var a = targetRow - 1, b = col - 1; 0 < a && !(1 > b) && isCurrentColor(a, b); a--)
                             b--;
-                        for (c = targetRow + 1, b = col + 1; 7 > c && !(7 < b) && isCurrentColor(c, b); c++)
+                        for (var c = targetRow + 1, b = col + 1; 7 > c && !(7 < b) && isCurrentColor(c, b); c++)
                             b++;
                         return 4 < c - a
                     }(targetRow, col)
                     // Find diagonal 4-in-a-row from top left to bottom right
                     || function (targetRow, col) {
-                        for (a = targetRow - 1, b = col + 1; 0 < a && !(7 < b) && isCurrentColor(a, b); a--)
+                        for (var a = targetRow - 1, b = col + 1; 0 < a && !(7 < b) && isCurrentColor(a, b); a--)
                             b++;
-                        for (c = targetRow + 1, b = col - 1; 7 > c && !(1 > b) && isCurrentColor(c, b); c++)
+                        for (var c = targetRow + 1, b = col - 1; 7 > c && !(1 > b) && isCurrentColor(c, b); c++)
                             b--;
                         return 4 < c - a;
                     }(targetRow, col);

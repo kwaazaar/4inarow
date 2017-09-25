@@ -1,2 +1,3 @@
 node_modules/
-build/
+blockchain/build/
+blockchain/node_modules/

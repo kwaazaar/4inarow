@@ -1,0 +1,22 @@
+{
+  "name": "4inarow",
+  "version": "1.0.0",
+  "description": "Blockchain powered 4-in-a-row",
+  "main": "code.js",
+  "scripts": {
+    "test": "index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kwaazaar/4inarow.git"
+  },
+  "author": "Robert te Kaat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kwaazaar/4inarow/issues"
+  },
+  "homepage": "https://github.com/kwaazaar/4inarow#readme",
+  "dependencies": {
+    "web3": "^1.0.0-beta.22"
+  }
+}
