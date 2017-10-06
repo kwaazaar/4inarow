@@ -4,7 +4,8 @@
   "description": "Blockchain powered 4-in-a-row",
   "main": "code.js",
   "scripts": {
-    "test": "index.html"
+    "build": "webpack",
+    "start": "webpack-dev-server --open"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,15 @@
   },
   "homepage": "https://github.com/kwaazaar/4inarow#readme",
   "dependencies": {
+    "es6-module-loader": "^0.17.11",
+    "traceur": "0.0.108",
     "web3": "^1.0.0-beta.22"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^4.1.1",
+    "css-loader": "^0.28.7",
+    "style-loader": "^0.19.0",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
   }
 }
